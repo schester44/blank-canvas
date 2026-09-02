@@ -1,0 +1,391 @@
+.agents/skills/better-auth-best-practices/SKILL.md
+  s_5df4bdd2544a30::t_5f58439f244a43 1-175
+.agents/skills/better-auth-security-best-practices/SKILL.MD
+  s_5df4bdd2544a30::t_8dcb7f12a2a769 1-432
+.agents/skills/create-auth-skill/SKILL.md
+  s_5df4bdd2544a30::t_15f8ded648204e 1-321
+.agents/skills/organization-best-practices/SKILL.md
+  s_5df4bdd2544a30::t_fe15419a3323cc 1-479
+.agents/skills/two-factor-authentication-best-practices/SKILL.md
+  s_5df4bdd2544a30::t_c07a3190d28179 1-331
+.dockerignore
+  s_5df4bdd2544a30::t_49b001d4262289 1-58
+.gitignore
+  s_5df4bdd2544a30::t_14549b54b346d4 1-45
+.nvmrc
+  s_5df4bdd2544a30::t_9aedb12e9db344 1
+.yarnrc.yml
+  s_5df4bdd2544a30::t_655dbf189aebc3 1
+Dockerfile
+  s_5df4bdd2544a30::t_04ab57d4f936b3 1-60
+apps/web/.env-example
+  s_5df4bdd2544a30::t_1301f91933c410 1-19
+apps/web/components.json
+  s_5df4bdd2544a30::t_33028aded61dee 1-20
+apps/web/package.json
+  s_5df4bdd2544a30::t_6b96b3a62a03e3 1-50
+apps/web/src/__testing__/render-with-router.tsx
+  s_5df4bdd2544a30::t_0ffcc6b701b9cb 1-158
+apps/web/src/__testing__/setup-ui.ts
+  s_5df4bdd2544a30::t_80e2362d3bdca7 1
+apps/web/src/components/api-key-creation-modal.tsx
+  s_5df4bdd2544a30::t_849228b51ef768 1-205
+apps/web/src/components/completed-jobs-table.tsx
+  s_5df4bdd2544a30::t_7786fb48d4e5d1 1-83
+apps/web/src/components/copy-button.tsx
+  s_5df4bdd2544a30::t_92d157aeccfe24 1-40
+apps/web/src/components/error-page.tsx
+  s_5df4bdd2544a30::t_bd4d9c42637126 1-33
+apps/web/src/components/failed-jobs-table.tsx
+  s_5df4bdd2544a30::t_e773770b738069 1-147
+apps/web/src/components/job-stats-cards.tsx
+  s_5df4bdd2544a30::t_ef8d595a549f0e 1-37
+apps/web/src/components/multi-email-input.tsx
+  s_5df4bdd2544a30::t_e3f3474c1d6d92 1-125
+apps/web/src/components/permission-gate.tsx
+  s_5df4bdd2544a30::t_ff714c8be765c0 1-26
+apps/web/src/components/table-pagination.tsx
+  s_5df4bdd2544a30::t_3f758cdf5ef2f6 1-67
+apps/web/src/components/table-search.tsx
+  s_5df4bdd2544a30::t_b3be05ec9c4f2d 1-54
+apps/web/src/components/theme-provider.tsx
+  s_5df4bdd2544a30::t_00a7de74dc87b5 1-63
+apps/web/src/components/ui/alert-dialog.tsx
+  s_5df4bdd2544a30::t_70109c7624d52f 1-196
+apps/web/src/components/ui/alert.tsx
+  s_5df4bdd2544a30::t_7a3314311e9192 1-66
+apps/web/src/components/ui/avatar.tsx
+  s_5df4bdd2544a30::t_827cbbe824d693 1-107
+apps/web/src/components/ui/badge.tsx
+  s_5df4bdd2544a30::t_c2445fcb2fc552 1-48
+apps/web/src/components/ui/button.tsx
+  s_5df4bdd2544a30::t_4b562458e1484b 1-64
+apps/web/src/components/ui/card.tsx
+  s_5df4bdd2544a30::t_6ad28a020cacd3 1-85
+apps/web/src/components/ui/collapsible.tsx
+  s_5df4bdd2544a30::t_a773aaf4a2f936 1-31
+apps/web/src/components/ui/dialog.tsx
+  s_5df4bdd2544a30::t_88b8077dfd1107 1-158
+apps/web/src/components/ui/dropdown-menu.tsx
+  s_5df4bdd2544a30::t_462612248587ec 1-255
+apps/web/src/components/ui/input.tsx
+  s_5df4bdd2544a30::t_dfe140e049c6d4 1-21
+apps/web/src/components/ui/label.tsx
+  s_5df4bdd2544a30::t_47bb2ded26430b 1-24
+apps/web/src/components/ui/select.tsx
+  s_5df4bdd2544a30::t_da7238ac76b02c 1-188
+apps/web/src/components/ui/separator.tsx
+  s_5df4bdd2544a30::t_0bde1168e14eb4 1-26
+apps/web/src/components/ui/sheet.tsx
+  s_5df4bdd2544a30::t_c0bfba0b052a2a 1-141
+apps/web/src/components/ui/sidebar.tsx
+  s_5df4bdd2544a30::t_26623465b404d4 1-724
+apps/web/src/components/ui/skeleton.tsx
+  s_5df4bdd2544a30::t_85a285838fca80 1-13
+apps/web/src/components/ui/spinner.tsx
+  s_5df4bdd2544a30::t_ced3dc0c2d06b8 1-16
+apps/web/src/components/ui/table.tsx
+  s_5df4bdd2544a30::t_6631203763de22 1-116
+apps/web/src/components/ui/tabs.tsx
+  s_5df4bdd2544a30::t_0deb97cfb88ad4 1-64
+apps/web/src/components/ui/tooltip.tsx
+  s_5df4bdd2544a30::t_76cbe2ab293b41 1-57
+apps/web/src/components/user-menu.tsx
+  s_5df4bdd2544a30::t_ae3a1cb09e86ff 1-105
+apps/web/src/components/webhook-creation-modal.tsx
+  s_5df4bdd2544a30::t_f28fadeeb2f080 1-210
+apps/web/src/entities/api-keys/actions/create-api-key-action.ts
+  s_5df4bdd2544a30::t_bef85b49da3e01 1-61
+apps/web/src/entities/api-keys/actions/delete-api-key-action.ts
+  s_5df4bdd2544a30::t_c3d3dec5887b7a 1-32
+apps/web/src/entities/api-keys/actions/get-api-keys-action.ts
+  s_5df4bdd2544a30::t_1c7aa832100603 1-25
+apps/web/src/entities/audit-log/actions/get-audit-log-action.ts
+  s_5df4bdd2544a30::t_87484ece9a7075 1-66
+apps/web/src/entities/jobs/actions/get-completed-jobs-action.ts
+  s_5df4bdd2544a30::t_becd2c3d99682d 1-50
+apps/web/src/entities/jobs/actions/get-failed-jobs-action.ts
+  s_5df4bdd2544a30::t_85c4e7a708adf5 1-50
+apps/web/src/entities/jobs/actions/get-job-stats-action.ts
+  s_5df4bdd2544a30::t_b8ecf053785bba 1-28
+apps/web/src/entities/webhooks/actions/create-webhook-endpoint-action.ts
+  s_5df4bdd2544a30::t_a7508813908647 1-48
+apps/web/src/entities/webhooks/actions/delete-webhook-endpoint-action.ts
+  s_5df4bdd2544a30::t_0581e956eff081 1-36
+apps/web/src/entities/webhooks/actions/get-webhooks-action.ts
+  s_5df4bdd2544a30::t_08bbacaba7e327 1-25
+apps/web/src/hooks/use-mobile.ts
+  s_5df4bdd2544a30::t_6446980a68a070 1-19
+apps/web/src/hooks/use-permission.ts
+  s_5df4bdd2544a30::t_0b2301f7cdca76 1-26
+apps/web/src/lib/audit-log/index.ts
+  s_5df4bdd2544a30::t_3b06731b6f9a97 1-2
+apps/web/src/lib/auth/check-permission.ts
+  s_7180d369e076bc::t_db67e11c360bd2 1-18
+apps/web/src/lib/auth/permissions.ts
+  s_7180d369e076bc::t_b395dc85df8c72 1-34
+apps/web/src/lib/errors.ts
+  s_5df4bdd2544a30::t_fa3afabb9e8735 1-100
+apps/web/src/lib/formatting.ts
+  s_5df4bdd2544a30::t_c786f977e4f1de 1-79
+apps/web/src/lib/logger.ts
+  s_5df4bdd2544a30::t_d4378e1e11bb17 1-3
+apps/web/src/lib/meta.ts
+  s_5df4bdd2544a30::t_e75b86b0bc5f07 1-3
+apps/web/src/lib/pagination-schema.ts
+  s_5df4bdd2544a30::t_330e9cad92abef 1-35
+apps/web/src/lib/requests.ts
+  s_5df4bdd2544a30::t_a70dedff2dd467 1-167
+apps/web/src/lib/session.ts
+  s_7180d369e076bc::t_9a779afa6bb780 1-27
+apps/web/src/lib/short-id.ts
+  s_5df4bdd2544a30::t_58053957e364b6 1-3
+apps/web/src/lib/theme.ts
+  s_5df4bdd2544a30::t_eba5b4cc55318d 1-16
+apps/web/src/lib/utils.ts
+  s_5df4bdd2544a30::t_e432ea28e8c01d 1-6
+apps/web/src/lib/webhooks.ts
+  s_5df4bdd2544a30::t_5f852c2a6d3889 1-39
+apps/web/src/middleware/admin-api-key.ts
+  s_5df4bdd2544a30::t_f24f1315be8423 1-37
+apps/web/src/middleware/errors.ts
+  s_5df4bdd2544a30::t_f0718ad92c12ef 1-16
+apps/web/src/middleware/non-prod-only.ts
+  s_5df4bdd2544a30::t_96d94397896cce 1-22
+apps/web/src/middleware/tracing.ts
+  s_5df4bdd2544a30::t_b4aeeb21327eec 1-130
+apps/web/src/routeTree.gen.ts
+  s_7180d369e076bc::t_41418f62bdd74a 1-338
+apps/web/src/router.tsx
+  s_5df4bdd2544a30::t_60948c25117955 1-20
+apps/web/src/routes/__root.tsx
+  s_5df4bdd2544a30::t_330efadad59455 1-48
+apps/web/src/routes/_authed/audit-log.tsx
+  s_5df4bdd2544a30::t_02b4f3eca9fcf4 1-348
+apps/web/src/routes/_authed/dashboard.tsx
+  s_7180d369e076bc::t_7878b6c79e24e4 1-29
+apps/web/src/routes/_authed/developers/api-keys.tsx
+  s_5df4bdd2544a30::t_099ae0bb4cfa43 1-175
+apps/web/src/routes/_authed/developers/jobs.tsx
+  s_5df4bdd2544a30::t_5423e31404e4c0 1-60
+apps/web/src/routes/_authed/developers/webhooks.tsx
+  s_5df4bdd2544a30::t_bf238e9dd29618 1-180
+apps/web/src/routes/api/admin/create-api-key.ts
+  s_5df4bdd2544a30::t_4658f2e2b719f2 1-17
+apps/web/src/routes/api/auth/$.ts
+  s_5df4bdd2544a30::t_9fc11d02a5dc4c 1-36
+apps/web/src/routes/login.tsx
+  s_5df4bdd2544a30::t_880925e9df3b7c 1-242
+apps/web/src/server.ts
+  s_5df4bdd2544a30::t_bca6facd9049f2 1-8
+apps/web/src/start.ts
+  s_5df4bdd2544a30::t_4d498787507766 1-13
+apps/web/src/styles.css
+  s_5df4bdd2544a30::t_92238db62965db 1-73
+apps/web/tsconfig.json
+  s_5df4bdd2544a30::t_a8ef3c4c8c4aea 1-24
+apps/web/vite.config.ts
+  s_5df4bdd2544a30::t_efbeff4ed0566c 1-34
+apps/worker/Procfile
+  s_5df4bdd2544a30::t_60599c9fff1ba7 1
+apps/worker/package.json
+  s_5df4bdd2544a30::t_f0087ab10a3cce 1-29
+apps/worker/src/handlers/example.ts
+  s_5df4bdd2544a30::t_fff76afd888496 1-22
+apps/worker/src/handlers/send-webhook-event.ts
+  s_7180d369e076bc::t_8395fe727fdb7f 1-226
+apps/worker/src/index.ts
+  s_5df4bdd2544a30::t_a3f38d9ac2ee7b 1-67
+apps/worker/src/lib/logger.ts
+  s_5df4bdd2544a30::t_14e68e2218e3fe 1-3
+apps/worker/src/lib/webhooks.ts
+  s_5df4bdd2544a30::t_da2e4db48933f5 1-17
+apps/worker/tsconfig.json
+  s_5df4bdd2544a30::t_e0c3e902f60a6a 1-25
+apps/worker/tsup.config.ts
+  s_5df4bdd2544a30::t_1b695c20164d9c 1-11
+apps/worker/vitest.config.ts
+  s_5df4bdd2544a30::t_418a06f6c7c081 1-19
+deploy/release.sh
+  s_5df4bdd2544a30::t_9eb438258a0f92 1-40
+heroku/post-build.sh
+  s_5df4bdd2544a30::t_369a7ca0a3b499 1-64
+heroku/release.sh
+  s_5df4bdd2544a30::t_21c9ff708fafd6 1-40
+oxlint.json
+  s_5df4bdd2544a30::t_4a77cff09421db 1-22
+package.json
+  s_5df4bdd2544a30::t_264ad5d8053b2d 1-33
+packages/db/package.json
+  s_5df4bdd2544a30::t_25c57d3e2b86ef 1-40
+packages/db/prisma.config.ts
+  s_5df4bdd2544a30::t_e9a0c28efa89cf 1-35
+packages/db/src/data-migrations/runner.ts
+  s_5df4bdd2544a30::t_2d0127aaecc123 1-111
+packages/db/src/data-migrations/types.ts
+  s_5df4bdd2544a30::t_1bb5444cc32bb3 1-23
+packages/db/src/index.ts
+  s_5df4bdd2544a30::t_a6e8c7ccc88752 1-27
+packages/db/src/prisma/dbml/schema.dbml
+  s_5df4bdd2544a30::t_51a92116426790 1-150
+packages/db/src/prisma/migrations/20260521180040_init/migration.sql
+  s_5df4bdd2544a30::t_b72edde9a627bd 1-215
+packages/db/src/prisma/migrations/migration_lock.toml
+  s_5df4bdd2544a30::t_f7aa6c09df646d 1-3
+packages/db/src/prisma/seed.ts
+  s_7180d369e076bc::t_1acba44af9c0e8 1-37
+packages/db/tsconfig.json
+  s_5df4bdd2544a30::t_09b0302a1d5f1d 1-17
+packages/db/turbo.json
+  s_5df4bdd2544a30::t_047d84224090f7 1-23
+packages/observability/package.json
+  s_5df4bdd2544a30::t_d954957a8e3a91 1-35
+packages/observability/src/index.ts
+  s_5df4bdd2544a30::t_27ba167fe528f7 1-73
+packages/observability/src/instrument.ts
+  s_5df4bdd2544a30::t_1b47cfd1d52666 1-89
+packages/observability/src/logger.ts
+  s_5df4bdd2544a30::t_baa58f2690d4ba 1-106
+packages/observability/tsconfig.json
+  s_5df4bdd2544a30::t_dad31d1caccddc 1-17
+packages/prisma-dbml-generator/.gitignore
+  s_5df4bdd2544a30::t_cb8e833a93e975 1
+packages/prisma-dbml-generator/README.md
+  s_5df4bdd2544a30::t_6621b6a38f9fdf 1-49
+packages/prisma-dbml-generator/package.json
+  s_5df4bdd2544a30::t_dd95d312613b3c 1-48
+packages/prisma-dbml-generator/src/cli/dbml-generator.ts
+  s_5df4bdd2544a30::t_922614c1ea79d1 1-41
+packages/prisma-dbml-generator/src/cli/generator.ts
+  s_5df4bdd2544a30::t_ebd7b3d0d6a4ee 1-11
+packages/prisma-dbml-generator/src/generator.ts
+  s_5df4bdd2544a30::t_900e9eda9d5aab 1
+packages/prisma-dbml-generator/src/generator/dbml.ts
+  s_5df4bdd2544a30::t_5ae1d68ffe30a5 1-60
+packages/prisma-dbml-generator/src/generator/enums.ts
+  s_5df4bdd2544a30::t_58f82a08c76c71 1-11
+packages/prisma-dbml-generator/src/generator/many-to-many-tables.ts
+  s_5df4bdd2544a30::t_cf19438311a9cf 1-118
+packages/prisma-dbml-generator/src/generator/model.ts
+  s_5df4bdd2544a30::t_c89801c1dded0a 1-8
+packages/prisma-dbml-generator/src/generator/project.ts
+  s_5df4bdd2544a30::t_4a57b81b6ea736 1-68
+packages/prisma-dbml-generator/src/generator/relations.ts
+  s_5df4bdd2544a30::t_c314442a35e6ca 1-116
+packages/prisma-dbml-generator/src/generator/table.ts
+  s_5df4bdd2544a30::t_f2ebc6a6978661 1-165
+packages/prisma-dbml-generator/src/index.ts
+  s_5df4bdd2544a30::t_9056d8b8a811f6 1-17
+packages/prisma-dbml-generator/src/keywords.ts
+  s_5df4bdd2544a30::t_bdbfb7d513a0ce 1-22
+packages/prisma-dbml-generator/tsconfig.json
+  s_5df4bdd2544a30::t_1586cefe231eb3 1-16
+packages/prisma-dbml-generator/tsup.config.ts
+  s_5df4bdd2544a30::t_e4e61d1eb6d906 1-14
+packages/prisma-dbml-generator/turbo.json
+  s_5df4bdd2544a30::t_22645ff1f93b70 1-9
+packages/queues/package.json
+  s_5df4bdd2544a30::t_f876f93d93902b 1-29
+packages/queues/src/client.ts
+  s_5df4bdd2544a30::t_71dc7769f51316 1-318
+packages/queues/src/errors.ts
+  s_5df4bdd2544a30::t_94bdf93e3f17af 1-19
+packages/queues/src/index.ts
+  s_5df4bdd2544a30::t_7bcabc89275d4a 1-7
+packages/queues/src/queues.ts
+  s_5df4bdd2544a30::t_b4378c3c1c1ef5 1-35
+packages/queues/src/queues/example.ts
+  s_5df4bdd2544a30::t_3a535d937b16d9 1-23
+packages/queues/src/queues/webhook/webhook.ts
+  s_7180d369e076bc::t_c43204dea24080 1-47
+packages/queues/src/types.ts
+  s_5df4bdd2544a30::t_79f25ce5ebf71c 1-17
+packages/queues/tsconfig.json
+  s_5df4bdd2544a30::t_c8777d75257c4a 1-19
+packages/storage/package.json
+  s_5df4bdd2544a30::t_45778cb3599024 1-30
+packages/storage/src/create-storage-client.ts
+  s_5df4bdd2544a30::t_1a1142ebc348f3 1-46
+packages/storage/src/index.ts
+  s_5df4bdd2544a30::t_7b16e91eb9db93 1-9
+packages/storage/src/local-storage-client.ts
+  s_5df4bdd2544a30::t_68e59efd857a6b 1-75
+packages/storage/src/s3-storage-client.ts
+  s_5df4bdd2544a30::t_863ca9ae253c2f 1-85
+packages/storage/src/testing.ts
+  s_5df4bdd2544a30::t_52f071ca294019 1-14
+packages/storage/src/types.ts
+  s_5df4bdd2544a30::t_65dfcb3ddee5a5 1-34
+packages/storage/tsconfig.json
+  s_5df4bdd2544a30::t_0ebfac609e978f 1-8
+packages/testing/package.json
+  s_5df4bdd2544a30::t_6c9714044c6c28 1-33
+packages/testing/src/db.ts
+  s_5df4bdd2544a30::t_2b6a09ad015cba 1-17
+packages/testing/src/env.ts
+  s_5df4bdd2544a30::t_b56b16d6345645 1-59
+packages/testing/src/factories/index.ts
+  s_5df4bdd2544a30::t_4f35977af86adf 1
+packages/testing/src/index.ts
+  s_5df4bdd2544a30::t_9fa8157bd7686e 1-4
+packages/testing/src/mocks/job.ts
+  s_5df4bdd2544a30::t_ad59ca6b9cbc62 1-13
+packages/testing/src/mocks/logger.ts
+  s_5df4bdd2544a30::t_9105c9514e8ecb 1-10
+packages/testing/src/requests.ts
+  s_5df4bdd2544a30::t_93cbfc9bb71c16 1-5
+packages/testing/src/test.ts
+  s_5df4bdd2544a30::t_59f4842025e4b1 1-28
+packages/testing/src/types.ts
+  s_5df4bdd2544a30::t_563a78706f32dd 1-5
+packages/testing/tsconfig.json
+  s_5df4bdd2544a30::t_9415dd55cfc68a 1-11
+packages/workflows/package.json
+  s_5df4bdd2544a30::t_80c73db066a47b 1-34
+packages/workflows/src/client.ts
+  s_5df4bdd2544a30::t_3e1711994efad1 1-30
+packages/workflows/src/engine.ts
+  s_5df4bdd2544a30::t_1db7998b215358 1-20
+packages/workflows/src/workflows/example.ts
+  s_5df4bdd2544a30::t_4f389f02459f5e 1-85
+packages/workflows/tsconfig.json
+  s_5df4bdd2544a30::t_2f9d3eb35f3ed0 1-16
+railway.json
+  s_5df4bdd2544a30::t_091113ee100805 1-11
+setup.sh
+  s_5df4bdd2544a30::t_35ba5684062ce9 1-85
+skills-lock.json
+  s_5df4bdd2544a30::t_826fa8f31369d8 1-30
+tsconfig.base.json
+  s_5df4bdd2544a30::t_0ded34ceed9037 1-22
+turbo.json
+  s_5df4bdd2544a30::t_848b9d4a53e9e5 1-32
+vitest.config.ts
+  s_5df4bdd2544a30::t_6e1eeccceca383 1-11
+yarn.lock
+  s_5df4bdd2544a30::t_c00133271b410d 1-11987
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "286a8af21c7d24d6a48c344b9051938540f9ddd3",
+  "prompts": {},
+  "sessions": {
+    "s_5df4bdd2544a30": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a05f97-8de1-742d-b0f9-47cf688a4f0f",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    },
+    "s_7180d369e076bc": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a05f87-5b55-75d1-aeac-b49bbc93de44",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
