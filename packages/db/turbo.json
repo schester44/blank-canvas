@@ -1,0 +1,23 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "generate": {
+      "dependsOn": ["@__APP_NAME__/prisma-dbml-generator#build"],
+      "outputs": ["src/generated/**", "./src/prisma/dbml/**"],
+      "passThroughEnv": ["DATABASE_URL"]
+    },
+    "reset": {
+      "cache": false
+    },
+    "migrate": {
+      "cache": false,
+      "persistent": true,
+      "passThroughEnv": ["DATABASE_URL"]
+    },
+    "seed": {
+      "cache": false,
+      "passThroughEnv": ["DATABASE_URL"]
+    }
+  }
+}

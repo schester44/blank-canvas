@@ -1,0 +1,206 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+generator dbml {
+  provider              = "prisma-dbml-generator"
+  includeRelationFields = false
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false) @map("email_verified")
+  image         String?
+  role          String    @default("user")
+  banned        Boolean   @default(false)
+  banReason     String?   @map("ban_reason")
+  banExpires    DateTime? @map("ban_expires") @db.Timestamptz(6)
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  sessions Session[]
+  accounts Account[]
+
+  @@map("users")
+}
+
+model Session {
+  id                   String   @id
+  expiresAt            DateTime @map("expires_at")
+  token                String   @unique
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @default(now()) @map("updated_at")
+  ipAddress            String?  @map("ip_address")
+  userAgent            String?  @map("user_agent")
+  userId               String   @map("user_id")
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy       String?  @map("impersonated_by")
+
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String    @unique @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at")
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at")
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime  @default(now()) @map("updated_at")
+
+  @@map("accounts")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime  @map("expires_at")
+  createdAt  DateTime? @map("created_at")
+  updatedAt  DateTime? @map("updated_at")
+
+  @@map("verifications")
+}
+
+model WebhookEndpoint {
+  id                      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                    String    @db.VarChar(255)
+  url                     String    @db.VarChar(255)
+  signingSecretCipherText Bytes     @map("signing_secret_ct")
+  signingSecretNonce      Bytes     @map("signing_secret_nonce")
+  createdAt               DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  attempts WebhookAttempt[]
+
+  @@unique([url])
+  @@map("webhook_endpoints")
+}
+
+model WebhookEvent {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  idempotencyKey String   @map("idempotency_key") @db.VarChar(255)
+  topic          String   @db.VarChar(255)
+  resourceId     String?  @map("resource_id") @db.VarChar(255)
+  requestBody    Json?    @map("request_body") @db.JsonB
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  attempts WebhookAttempt[]
+
+  @@unique([idempotencyKey])
+  @@index([topic])
+  @@map("webhook_events")
+}
+
+enum WebhookAttemptStatus {
+  PENDING
+  SUCCESS
+  FAILED
+
+  @@map("webhook_attempt_status")
+}
+
+model WebhookAttempt {
+  id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  eventId    String               @map("event_id") @db.Uuid
+  endpointId String               @map("endpoint_id") @db.Uuid
+  status     WebhookAttemptStatus
+  httpCode   Int?                 @map("http_code")
+  latencyMs  Int?                 @map("latency_ms")
+  retryNum   Int                  @default(0) @map("retry_num")
+  createdAt  DateTime             @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  event    WebhookEvent    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  endpoint WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([endpointId, createdAt])
+  @@index([status, createdAt])
+  @@map("webhook_attempts")
+}
+
+model ApiKey {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String    @db.VarChar(255)
+  keyId        String    @unique @map("key_id") @db.VarChar(255)
+  hashedSecret String    @map("hashed_secret") @db.VarChar(255)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime? @map("updated_at") @db.Timestamptz(6)
+
+  @@map("api_keys")
+}
+
+enum AuditLogActionType {
+  USER_ROLE_UPDATED
+  SETTINGS_UPDATED
+  API_KEY_CREATED
+
+  @@map("audit_log_action_type")
+}
+
+enum AuditLogActorType {
+  USER
+  SYSTEM
+  API_KEY
+
+  @@map("audit_log_actor_type")
+}
+
+enum AuditLogEntityType {
+  USER
+  API_KEY
+
+  @@map("audit_log_entity_type")
+}
+
+model AuditLog {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  action     AuditLogActionType
+  entityType AuditLogEntityType @map("entity_type")
+  entityId   String             @map("entity_id")
+
+  actorType AuditLogActorType @map("actor_type")
+  actorId   String?           @map("actor_id")
+  actorName String?           @map("actor_name") @db.VarChar(255)
+
+  metadata Json? @db.JsonB
+
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  occurredAt DateTime @default(now()) @map("occurred_at") @db.Timestamptz(6)
+
+  relatedEntities AuditLogEntity[]
+
+  @@index([entityType, entityId, occurredAt(sort: Desc)])
+  @@index([occurredAt(sort: Desc)])
+  @@index([actorType, actorId])
+  @@map("audit_log")
+}
+
+model AuditLogEntity {
+  id         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  auditLogId String             @map("audit_log_id") @db.Uuid
+  entityType AuditLogEntityType @map("entity_type")
+  entityId   String             @map("entity_id") @db.Uuid
+
+  auditLog AuditLog @relation(fields: [auditLogId], references: [id], onDelete: Cascade)
+
+  @@unique([auditLogId, entityType, entityId])
+  @@index([entityType, entityId, auditLogId])
+  @@map("audit_log_entities")
+}
+

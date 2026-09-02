@@ -1,0 +1,32 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local", "**/tsconfig*.json"],
+  "globalEnv": ["NODE_ENV", "PORT", "OTEL_ENABLED", "OTEL_EXPORTER_OTLP_ENDPOINT", "OTEL_SERVICE_NAME"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "generate": {
+      "cache": false
+    },
+    "migrate": {
+      "cache": false
+    },
+    "seed": {
+      "cache": false
+    },
+    "reset": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "outputs": []
+    }
+  }
+}

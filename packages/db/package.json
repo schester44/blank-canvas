@@ -1,0 +1,40 @@
+{
+  "name": "@__APP_NAME__/db",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./src/generated/prisma/client.ts",
+      "default": "./src/generated/prisma/client.ts"
+    },
+    "./generated/prisma/enums": {
+      "types": "./src/generated/prisma/enums.ts",
+      "default": "./src/generated/prisma/enums.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate",
+    "reset": "prisma migrate reset --force && yarn seed",
+    "seed": "prisma db seed",
+    "data-migrate": "tsx ./src/data-migrations/runner.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7"
+  },
+  "devDependencies": {
+    "@__APP_NAME__/prisma-dbml-generator": "workspace:*",
+    "dotenv": "^16",
+    "prisma": "^7",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

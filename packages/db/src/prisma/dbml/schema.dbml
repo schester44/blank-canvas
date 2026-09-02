@@ -1,0 +1,150 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table users {
+  id String [pk]
+  name String [not null]
+  email String [unique, not null]
+  email_verified Boolean [not null, default: false]
+  image String
+  role String [not null, default: 'user']
+  banned Boolean [not null, default: false]
+  ban_reason String
+  ban_expires DateTime
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Table sessions {
+  id String [pk]
+  expires_at DateTime [not null]
+  token String [unique, not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+  ip_address String
+  user_agent String
+  user_id String [not null]
+  impersonated_by String
+}
+
+Table accounts {
+  id String [pk]
+  account_id String [unique, not null]
+  provider_id String [not null]
+  user_id String [not null]
+  access_token String
+  refresh_token String
+  id_token String
+  access_token_expires_at DateTime
+  refresh_token_expires_at DateTime
+  scope String
+  password String
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [default: `now()`, not null]
+}
+
+Table verifications {
+  id String [pk]
+  identifier String [not null]
+  value String [not null]
+  expires_at DateTime [not null]
+  created_at DateTime
+  updated_at DateTime
+}
+
+Table webhook_endpoints {
+  id String [pk]
+  name String [not null]
+  url String [unique, not null]
+  signing_secret_ct Bytes [not null]
+  signing_secret_nonce Bytes [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Table webhook_events {
+  id String [pk]
+  idempotency_key String [unique, not null]
+  topic String [not null]
+  resource_id String
+  request_body Json
+  created_at DateTime [default: `now()`, not null]
+}
+
+Table webhook_attempts {
+  id String [pk]
+  event_id String [not null]
+  endpoint_id String [not null]
+  status WebhookAttemptStatus [not null]
+  http_code Int
+  latency_ms Int
+  retry_num Int [not null, default: 0]
+  created_at DateTime [default: `now()`, not null]
+}
+
+Table api_keys {
+  id String [pk]
+  name String [not null]
+  key_id String [unique, not null]
+  hashed_secret String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
+}
+
+Table audit_log {
+  id String [pk]
+  action AuditLogActionType [not null]
+  entity_type AuditLogEntityType [not null]
+  entity_id String [not null]
+  actor_type AuditLogActorType [not null]
+  actor_id String
+  actor_name String
+  metadata Json
+  created_at DateTime [default: `now()`, not null]
+  occurred_at DateTime [default: `now()`, not null]
+}
+
+Table audit_log_entities {
+  id String [pk]
+  audit_log_id String [not null]
+  entity_type AuditLogEntityType [not null]
+  entity_id String [not null]
+
+  indexes {
+    (audit_log_id, entity_type, entity_id) [unique]
+  }
+}
+
+Enum WebhookAttemptStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+Enum AuditLogActionType {
+  USER_ROLE_UPDATED
+  SETTINGS_UPDATED
+  API_KEY_CREATED
+}
+
+Enum AuditLogActorType {
+  USER
+  SYSTEM
+  API_KEY
+}
+
+Enum AuditLogEntityType {
+  USER
+  API_KEY
+}
+
+Ref: sessions.user_id > users.id [delete: Cascade]
+
+Ref: accounts.user_id > users.id [delete: Cascade]
+
+Ref: webhook_attempts.event_id > webhook_events.id [delete: Cascade]
+
+Ref: webhook_attempts.endpoint_id > webhook_endpoints.id [delete: Cascade]
+
+Ref: audit_log_entities.audit_log_id > audit_log.id [delete: Cascade]

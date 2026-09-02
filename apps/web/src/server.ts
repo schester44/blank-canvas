@@ -1,0 +1,8 @@
+import "@__APP_NAME__/observe/instrument";
+import handler, { createServerEntry } from "@tanstack/react-start/server-entry";
+
+export default createServerEntry({
+  async fetch(request) {
+    return handler.fetch(request);
+  },
+});
