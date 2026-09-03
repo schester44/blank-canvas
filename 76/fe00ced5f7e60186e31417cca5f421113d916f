@@ -1,0 +1,19 @@
+apps/web/src/routes/index.tsx
+  s_c8f21731efe8f1::t_aa4902329e0815 38,42-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "76fe00ced5f7e60186e31417cca5f421113d916f",
+  "prompts": {},
+  "sessions": {
+    "s_c8f21731efe8f1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a068a0-6e46-79a2-b408-91ef714d157f",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
