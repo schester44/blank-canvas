@@ -1,0 +1,20 @@
+apps/web/src/lib/sawhorse-data.ts
+  s_c8f21731efe8f1::t_3a8c0d54a71f0a 3,6-13,31,36-45,51,55-96
+  s_c8f21731efe8f1::t_38b9362857413b 97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "938931f18af706e68535bc20f139c100827cca90",
+  "prompts": {},
+  "sessions": {
+    "s_c8f21731efe8f1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a068a0-6e46-79a2-b408-91ef714d157f",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Steve Chester <schester44@gmail.com>"
+    }
+  }
+}
