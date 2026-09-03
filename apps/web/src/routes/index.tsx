@@ -35,18 +35,14 @@ function HomePage() {
         </h1>
 
         <p className="text-balance text-lg text-muted-foreground">
-          This is a blank canvas — let&apos;s build something fun together.
+          This is your app&apos;s starting point.
         </p>
 
         <p className="max-w-md text-balance text-sm text-muted-foreground/80">
-          Describe what you want in the chat and watch this page change. Every
-          edit hot-reloads right here.
+          Tell the agent what to build — changes appear here as they&apos;re
+          made.
         </p>
       </div>
-
-      <footer className="absolute bottom-6 text-xs text-muted-foreground/60">
-        TanStack Start · Tailwind · shadcn/ui · Postgres
-      </footer>
     </main>
   );
 }
