@@ -10,8 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as CopyRouteImport } from './routes/copy'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HaloClientsRouteImport } from './routes/halo/clients'
+import { Route as D2cStartRouteImport } from './routes/d2c/start'
+import { Route as D2cCheckoutRouteImport } from './routes/d2c/checkout'
+import { Route as ClientReviewRouteImport } from './routes/client/review'
+import { Route as ClientEmailRouteImport } from './routes/client/email'
+import { Route as AgentSearchRouteImport } from './routes/agent/search'
+import { Route as AgentProfileRouteImport } from './routes/agent/profile'
 import { Route as AuthedSettingsRouteImport } from './routes/_authed/settings'
 import { Route as AuthedDashboardRouteImport } from './routes/_authed/dashboard'
 import { Route as AuthedAuditLogRouteImport } from './routes/_authed/audit-log'
@@ -19,6 +27,8 @@ import { Route as ApiExampleIndexRouteImport } from './routes/api/example/index'
 import { Route as AuthedSettingsIndexRouteImport } from './routes/_authed/settings/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAdminCreateApiKeyRouteImport } from './routes/api/admin/create-api-key'
+import { Route as AgentReviewVerifiedRouteImport } from './routes/agent/review.verified'
+import { Route as AgentReviewUnverifiedRouteImport } from './routes/agent/review.unverified'
 import { Route as AuthedDevelopersWebhooksRouteImport } from './routes/_authed/developers/webhooks'
 import { Route as AuthedDevelopersJobsRouteImport } from './routes/_authed/developers/jobs'
 import { Route as AuthedDevelopersApiKeysRouteImport } from './routes/_authed/developers/api-keys'
@@ -28,6 +38,11 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CopyRoute = CopyRouteImport.update({
+  id: '/copy',
+  path: '/copy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedRoute = AuthedRouteImport.update({
   id: '/_authed',
   getParentRoute: () => rootRouteImport,
@@ -35,6 +50,41 @@ const AuthedRoute = AuthedRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HaloClientsRoute = HaloClientsRouteImport.update({
+  id: '/halo/clients',
+  path: '/halo/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const D2cStartRoute = D2cStartRouteImport.update({
+  id: '/d2c/start',
+  path: '/d2c/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const D2cCheckoutRoute = D2cCheckoutRouteImport.update({
+  id: '/d2c/checkout',
+  path: '/d2c/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientReviewRoute = ClientReviewRouteImport.update({
+  id: '/client/review',
+  path: '/client/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientEmailRoute = ClientEmailRouteImport.update({
+  id: '/client/email',
+  path: '/client/email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentSearchRoute = AgentSearchRouteImport.update({
+  id: '/agent/search',
+  path: '/agent/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentProfileRoute = AgentProfileRouteImport.update({
+  id: '/agent/profile',
+  path: '/agent/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedSettingsRoute = AuthedSettingsRouteImport.update({
@@ -72,6 +122,16 @@ const ApiAdminCreateApiKeyRoute = ApiAdminCreateApiKeyRouteImport.update({
   path: '/api/admin/create-api-key',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AgentReviewVerifiedRoute = AgentReviewVerifiedRouteImport.update({
+  id: '/agent/review/verified',
+  path: '/agent/review/verified',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentReviewUnverifiedRoute = AgentReviewUnverifiedRouteImport.update({
+  id: '/agent/review/unverified',
+  path: '/agent/review/unverified',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthedDevelopersWebhooksRoute =
   AuthedDevelopersWebhooksRouteImport.update({
     id: '/developers/webhooks',
@@ -91,13 +151,23 @@ const AuthedDevelopersApiKeysRoute = AuthedDevelopersApiKeysRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/copy': typeof CopyRoute
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthedAuditLogRoute
   '/dashboard': typeof AuthedDashboardRoute
   '/settings': typeof AuthedSettingsRouteWithChildren
+  '/agent/profile': typeof AgentProfileRoute
+  '/agent/search': typeof AgentSearchRoute
+  '/client/email': typeof ClientEmailRoute
+  '/client/review': typeof ClientReviewRoute
+  '/d2c/checkout': typeof D2cCheckoutRoute
+  '/d2c/start': typeof D2cStartRoute
+  '/halo/clients': typeof HaloClientsRoute
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/agent/review/unverified': typeof AgentReviewUnverifiedRoute
+  '/agent/review/verified': typeof AgentReviewVerifiedRoute
   '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings/': typeof AuthedSettingsIndexRoute
@@ -105,12 +175,22 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/copy': typeof CopyRoute
   '/login': typeof LoginRoute
   '/audit-log': typeof AuthedAuditLogRoute
   '/dashboard': typeof AuthedDashboardRoute
+  '/agent/profile': typeof AgentProfileRoute
+  '/agent/search': typeof AgentSearchRoute
+  '/client/email': typeof ClientEmailRoute
+  '/client/review': typeof ClientReviewRoute
+  '/d2c/checkout': typeof D2cCheckoutRoute
+  '/d2c/start': typeof D2cStartRoute
+  '/halo/clients': typeof HaloClientsRoute
   '/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/agent/review/unverified': typeof AgentReviewUnverifiedRoute
+  '/agent/review/verified': typeof AgentReviewVerifiedRoute
   '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/settings': typeof AuthedSettingsIndexRoute
@@ -120,13 +200,23 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
+  '/copy': typeof CopyRoute
   '/login': typeof LoginRoute
   '/_authed/audit-log': typeof AuthedAuditLogRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
   '/_authed/settings': typeof AuthedSettingsRouteWithChildren
+  '/agent/profile': typeof AgentProfileRoute
+  '/agent/search': typeof AgentSearchRoute
+  '/client/email': typeof ClientEmailRoute
+  '/client/review': typeof ClientReviewRoute
+  '/d2c/checkout': typeof D2cCheckoutRoute
+  '/d2c/start': typeof D2cStartRoute
+  '/halo/clients': typeof HaloClientsRoute
   '/_authed/developers/api-keys': typeof AuthedDevelopersApiKeysRoute
   '/_authed/developers/jobs': typeof AuthedDevelopersJobsRoute
   '/_authed/developers/webhooks': typeof AuthedDevelopersWebhooksRoute
+  '/agent/review/unverified': typeof AgentReviewUnverifiedRoute
+  '/agent/review/verified': typeof AgentReviewVerifiedRoute
   '/api/admin/create-api-key': typeof ApiAdminCreateApiKeyRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/_authed/settings/': typeof AuthedSettingsIndexRoute
@@ -136,13 +226,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/copy'
     | '/login'
     | '/audit-log'
     | '/dashboard'
     | '/settings'
+    | '/agent/profile'
+    | '/agent/search'
+    | '/client/email'
+    | '/client/review'
+    | '/d2c/checkout'
+    | '/d2c/start'
+    | '/halo/clients'
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
+    | '/agent/review/unverified'
+    | '/agent/review/verified'
     | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/settings/'
@@ -150,12 +250,22 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/copy'
     | '/login'
     | '/audit-log'
     | '/dashboard'
+    | '/agent/profile'
+    | '/agent/search'
+    | '/client/email'
+    | '/client/review'
+    | '/d2c/checkout'
+    | '/d2c/start'
+    | '/halo/clients'
     | '/developers/api-keys'
     | '/developers/jobs'
     | '/developers/webhooks'
+    | '/agent/review/unverified'
+    | '/agent/review/verified'
     | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/settings'
@@ -164,13 +274,23 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authed'
+    | '/copy'
     | '/login'
     | '/_authed/audit-log'
     | '/_authed/dashboard'
     | '/_authed/settings'
+    | '/agent/profile'
+    | '/agent/search'
+    | '/client/email'
+    | '/client/review'
+    | '/d2c/checkout'
+    | '/d2c/start'
+    | '/halo/clients'
     | '/_authed/developers/api-keys'
     | '/_authed/developers/jobs'
     | '/_authed/developers/webhooks'
+    | '/agent/review/unverified'
+    | '/agent/review/verified'
     | '/api/admin/create-api-key'
     | '/api/auth/$'
     | '/_authed/settings/'
@@ -180,7 +300,17 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
+  CopyRoute: typeof CopyRoute
   LoginRoute: typeof LoginRoute
+  AgentProfileRoute: typeof AgentProfileRoute
+  AgentSearchRoute: typeof AgentSearchRoute
+  ClientEmailRoute: typeof ClientEmailRoute
+  ClientReviewRoute: typeof ClientReviewRoute
+  D2cCheckoutRoute: typeof D2cCheckoutRoute
+  D2cStartRoute: typeof D2cStartRoute
+  HaloClientsRoute: typeof HaloClientsRoute
+  AgentReviewUnverifiedRoute: typeof AgentReviewUnverifiedRoute
+  AgentReviewVerifiedRoute: typeof AgentReviewVerifiedRoute
   ApiAdminCreateApiKeyRoute: typeof ApiAdminCreateApiKeyRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiExampleIndexRoute: typeof ApiExampleIndexRoute
@@ -195,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/copy': {
+      id: '/copy'
+      path: '/copy'
+      fullPath: '/copy'
+      preLoaderRoute: typeof CopyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authed': {
       id: '/_authed'
       path: ''
@@ -207,6 +344,55 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/halo/clients': {
+      id: '/halo/clients'
+      path: '/halo/clients'
+      fullPath: '/halo/clients'
+      preLoaderRoute: typeof HaloClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/d2c/start': {
+      id: '/d2c/start'
+      path: '/d2c/start'
+      fullPath: '/d2c/start'
+      preLoaderRoute: typeof D2cStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/d2c/checkout': {
+      id: '/d2c/checkout'
+      path: '/d2c/checkout'
+      fullPath: '/d2c/checkout'
+      preLoaderRoute: typeof D2cCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client/review': {
+      id: '/client/review'
+      path: '/client/review'
+      fullPath: '/client/review'
+      preLoaderRoute: typeof ClientReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/client/email': {
+      id: '/client/email'
+      path: '/client/email'
+      fullPath: '/client/email'
+      preLoaderRoute: typeof ClientEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent/search': {
+      id: '/agent/search'
+      path: '/agent/search'
+      fullPath: '/agent/search'
+      preLoaderRoute: typeof AgentSearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent/profile': {
+      id: '/agent/profile'
+      path: '/agent/profile'
+      fullPath: '/agent/profile'
+      preLoaderRoute: typeof AgentProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed/settings': {
@@ -256,6 +442,20 @@ declare module '@tanstack/react-router' {
       path: '/api/admin/create-api-key'
       fullPath: '/api/admin/create-api-key'
       preLoaderRoute: typeof ApiAdminCreateApiKeyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent/review/verified': {
+      id: '/agent/review/verified'
+      path: '/agent/review/verified'
+      fullPath: '/agent/review/verified'
+      preLoaderRoute: typeof AgentReviewVerifiedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agent/review/unverified': {
+      id: '/agent/review/unverified'
+      path: '/agent/review/unverified'
+      fullPath: '/agent/review/unverified'
+      preLoaderRoute: typeof AgentReviewUnverifiedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed/developers/webhooks': {
@@ -318,7 +518,17 @@ const AuthedRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
+  CopyRoute: CopyRoute,
   LoginRoute: LoginRoute,
+  AgentProfileRoute: AgentProfileRoute,
+  AgentSearchRoute: AgentSearchRoute,
+  ClientEmailRoute: ClientEmailRoute,
+  ClientReviewRoute: ClientReviewRoute,
+  D2cCheckoutRoute: D2cCheckoutRoute,
+  D2cStartRoute: D2cStartRoute,
+  HaloClientsRoute: HaloClientsRoute,
+  AgentReviewUnverifiedRoute: AgentReviewUnverifiedRoute,
+  AgentReviewVerifiedRoute: AgentReviewVerifiedRoute,
   ApiAdminCreateApiKeyRoute: ApiAdminCreateApiKeyRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiExampleIndexRoute: ApiExampleIndexRoute,
