@@ -1,81 +1,128 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export function PrototypeShell({
   title,
   subtitle,
   perspective,
   children,
+  maxWidth = "4xl",
 }: {
   title: string;
   subtitle?: string;
   perspective: "agent" | "client" | "d2c" | "internal" | "utility";
   children: React.ReactNode;
+  maxWidth?: "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "full";
 }) {
-  const perspectiveLabels = {
-    agent: "Agent POV",
-    client: "Client POV",
-    d2c: "D2C Client POV",
-    internal: "Internal (Halo)",
-    utility: "Utility",
+  const perspectiveConfig = {
+    agent: { label: "Agent", color: "bg-obie-teal text-obie-lime" },
+    client: { label: "Client", color: "bg-emerald-700 text-emerald-50" },
+    d2c: { label: "D2C", color: "bg-obie-teal text-obie-lime" },
+    internal: { label: "Internal", color: "bg-amber-700 text-amber-50" },
+    utility: { label: "Utility", color: "bg-muted text-muted-foreground" },
   };
 
-  const perspectiveColors = {
-    agent: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
-    client: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
-    d2c: "bg-violet-50 text-violet-700 dark:bg-violet-950 dark:text-violet-300",
-    internal: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
-    utility: "bg-muted text-muted-foreground",
-  };
+  const config = perspectiveConfig[perspective];
+  const maxWidthClass = {
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+    "3xl": "max-w-3xl",
+    "4xl": "max-w-4xl",
+    "5xl": "max-w-5xl",
+    "6xl": "max-w-6xl",
+    full: "max-w-full",
+  }[maxWidth];
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-10 border-b bg-card/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-4xl items-center gap-4 p-4">
+    <div className="min-h-screen bg-obie-surface">
+      {/* Top bar — mimics Obie app header */}
+      <header className="sticky top-0 z-10 border-b bg-white">
+        <div className={cn("mx-auto flex items-center gap-3 px-6 py-3", maxWidthClass)}>
           <Link
             to="/"
             className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back to prototype index</span>
+            <span className="sr-only">Back</span>
           </Link>
+
+          {/* Obie logo mark */}
+          <ObieLogo />
+
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <h1 className="text-sm font-semibold truncate">{title}</h1>
               <span
-                className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium ${perspectiveColors[perspective]}`}
+                className={cn(
+                  "inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                  config.color
+                )}
               >
-                {perspectiveLabels[perspective]}
+                {config.label}
               </span>
             </div>
             {subtitle && (
-              <p className="text-xs text-muted-foreground truncate">{subtitle}</p>
+              <p className="text-[11px] text-muted-foreground truncate">{subtitle}</p>
             )}
           </div>
         </div>
       </header>
-      <div className="mx-auto max-w-4xl p-4 md:p-6">{children}</div>
+      <main className={cn("mx-auto px-6 py-8", maxWidthClass)}>{children}</main>
     </div>
+  );
+}
+
+export function ObieLogo({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 80 32"
+      fill="none"
+      className={cn("h-6 w-auto", className)}
+      aria-label="Obie"
+    >
+      {/* Stylized "obie" wordmark */}
+      <text
+        x="0"
+        y="24"
+        fontFamily="Geist, system-ui, sans-serif"
+        fontWeight="700"
+        fontSize="26"
+        fill="currentColor"
+        className="text-obie-teal"
+      >
+        obie
+      </text>
+    </svg>
   );
 }
 
 export function StatusBadge({ status }: { status: "verified" | "unverified" | "pending" }) {
   if (status === "verified") {
     return (
-      <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+      <Badge
+        variant="outline"
+        className="border-emerald-300 bg-emerald-50 text-emerald-800 font-medium text-[11px]"
+      >
         Verified
       </Badge>
     );
   }
   if (status === "pending") {
     return (
-      <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
+      <Badge
+        variant="outline"
+        className="border-amber-300 bg-amber-50 text-amber-800 font-medium text-[11px]"
+      >
         Pending
       </Badge>
     );
   }
   return (
-    <Badge variant="secondary">Unverified</Badge>
+    <Badge variant="secondary" className="font-medium text-[11px]">
+      Unverified
+    </Badge>
   );
 }

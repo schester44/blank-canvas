@@ -7,10 +7,9 @@ import { PrototypeShell, StatusBadge } from "@/components/prototype-shell";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
-  User,
   Mail,
   CheckCircle2,
   AlertCircle,
@@ -30,8 +29,8 @@ type State = "view" | "editing" | "collision" | "pending";
 function AgentProfile() {
   const [state, setState] = useState<State>("view");
   const [newEmail, setNewEmail] = useState("");
-  const client = verifiedClients[0]!; // Jane Doe
-  const collisionClient = verifiedClients[1]!; // Ron Doe
+  const client = verifiedClients[0]!;
+  const collisionClient = verifiedClients[1]!;
   const clientName = `${client.firstName} ${client.lastName}`;
   const activePolicies = 3;
 
@@ -46,69 +45,58 @@ function AgentProfile() {
   return (
     <PrototypeShell
       title={copy.profileEdit.pageTitle}
-      subtitle="Agent or CSR editing a verified client's email — triggers endorsements on all policies"
+      subtitle="Try ron.doe@email.com for merge prompt"
       perspective="agent"
+      maxWidth="xl"
     >
-      <div className="mx-auto max-w-lg space-y-6">
+      <div className="space-y-6">
         {/* Client header */}
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-                <CheckCircle2 className="h-5 w-5" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-base font-semibold">{clientName}</span>
-                  <StatusBadge status="verified" />
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  {activePolicies} active policies · Verified {client.verifiedDate}
-                </p>
-              </div>
+        <section className="rounded-xl border bg-white p-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+              <CheckCircle2 className="h-5 w-5" />
             </div>
-          </CardContent>
-        </Card>
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold">{clientName}</span>
+                <StatusBadge status="verified" />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {activePolicies} active policies · Verified {client.verifiedDate}
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Email section */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-muted-foreground" />
-              <h2 className="text-sm font-semibold">Account email</h2>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Current email */}
-            <div className="space-y-2">
-              <Label>{copy.profileEdit.currentEmailLabel}</Label>
-              <div className="flex items-center gap-2 rounded-lg border bg-muted/30 p-3">
-                <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                <span className="text-sm font-medium">{client.email}</span>
-                {state === "pending" && (
-                  <StatusBadge status="verified" />
-                )}
+        <section className="rounded-xl border bg-white">
+          <div className="flex items-center gap-2 border-b px-5 py-3">
+            <Mail className="h-4 w-4 text-muted-foreground" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Account email
+            </span>
+          </div>
+          <div className="p-5 space-y-4">
+            {/* Current */}
+            <div className="space-y-1.5">
+              <Label className="text-xs font-medium">{copy.profileEdit.currentEmailLabel}</Label>
+              <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                <span className="text-sm font-medium text-emerald-800">{client.email}</span>
               </div>
             </div>
 
-            {/* View state */}
             {state === "view" && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="gap-1.5"
-                onClick={() => setState("editing")}
-              >
+              <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setState("editing")}>
                 <PencilLine className="h-3 w-3" />
                 {copy.shared.edit}
               </Button>
             )}
 
-            {/* Editing state */}
             {state === "editing" && (
               <div className="space-y-3">
-                <div className="space-y-2">
-                  <Label htmlFor="newEmail">{copy.profileEdit.newEmailLabel}</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="newEmail" className="text-xs font-medium">{copy.profileEdit.newEmailLabel}</Label>
                   <Input
                     id="newEmail"
                     type="email"
@@ -118,155 +106,101 @@ function AgentProfile() {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  {t(copy.profileEdit.helper, {
-                    name: client.firstName,
-                    count: activePolicies,
-                  })}
+                  {t(copy.profileEdit.helper, { name: client.firstName, count: activePolicies })}
                 </p>
                 <div className="flex gap-2">
-                  <Button
-                    onClick={handleSave}
-                    disabled={!newEmail || !newEmail.includes("@")}
-                  >
+                  <Button size="sm" onClick={handleSave} disabled={!newEmail || !newEmail.includes("@")}>
                     {copy.profileEdit.saveButton}
                   </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setNewEmail("");
-                      setState("view");
-                    }}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => { setNewEmail(""); setState("view"); }}>
                     {copy.shared.cancel}
                   </Button>
                 </div>
               </div>
             )}
 
-            {/* Collision — merge prompt */}
             {state === "collision" && (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
+                  <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
                   <div className="space-y-3 flex-1">
-                    <p className="text-sm font-medium text-amber-900 dark:text-amber-100">
+                    <p className="text-sm font-medium text-amber-900">
                       {t(copy.profileEdit.collisionTitle, {
                         email: newEmail,
                         name: `${collisionClient.firstName} ${collisionClient.lastName}`,
                       })}
                     </p>
                     <div className="flex flex-col gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="justify-start gap-2"
-                        onClick={() => setState("pending")}
-                      >
-                        <Shield className="h-4 w-4" />
-                        {t(copy.profileEdit.collisionMerge, {
-                          currentName: clientName,
-                          name: `${collisionClient.firstName} ${collisionClient.lastName}`,
-                        })}
+                      <Button variant="outline" size="sm" className="justify-start gap-2 bg-white" onClick={() => setState("pending")}>
+                        <Shield className="h-3.5 w-3.5" />
+                        {t(copy.profileEdit.collisionMerge, { currentName: clientName, name: `${collisionClient.firstName} ${collisionClient.lastName}` })}
                       </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="justify-start gap-2"
-                        onClick={() => {
-                          setNewEmail("");
-                          setState("editing");
-                        }}
-                      >
+                      <Button variant="outline" size="sm" className="justify-start gap-2 bg-white" onClick={() => { setNewEmail(""); setState("editing"); }}>
                         {copy.profileEdit.collisionKeepSeparate}
                       </Button>
-                      <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                      <button className="flex items-center gap-1.5 text-xs text-obie-link hover:underline mt-1">
                         <ExternalLink className="h-3 w-3" />
-                        {t(copy.profileEdit.collisionViewProfile, {
-                          name: `${collisionClient.firstName} ${collisionClient.lastName}`,
-                        })}
+                        {t(copy.profileEdit.collisionViewProfile, { name: `${collisionClient.firstName} ${collisionClient.lastName}` })}
                       </button>
                     </div>
                   </div>
-                  <button
-                    onClick={() => {
-                      setNewEmail("");
-                      setState("editing");
-                    }}
-                    className="text-amber-600 hover:text-amber-900 dark:text-amber-400"
-                  >
+                  <button onClick={() => { setNewEmail(""); setState("editing"); }} className="text-amber-500 hover:text-amber-800">
                     <X className="h-4 w-4" />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Pending confirmation */}
             {state === "pending" && (
-              <div className="space-y-3">
-                <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-950">
+              <div className="space-y-4">
+                <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
                   <div className="flex items-start gap-3">
-                    <Mail className="mt-0.5 h-5 w-5 text-blue-600 dark:text-blue-400" />
+                    <Mail className="mt-0.5 h-5 w-5 text-blue-600" />
                     <div className="space-y-1">
-                      <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                      <p className="text-sm font-medium text-blue-900">
                         Confirmation sent to {newEmail || "new@email.com"}
                       </p>
-                      <p className="text-xs text-blue-700 dark:text-blue-300">
-                        {client.firstName} needs to click the confirmation link. Until
-                        then, {client.email} remains the active sign-in email. All{" "}
-                        {activePolicies} active policies will be endorsed with the new
-                        contact email once confirmed.
+                      <p className="text-xs text-blue-700 leading-relaxed">
+                        {client.firstName} needs to click the confirmation link. Until then,{" "}
+                        {client.email} remains active. All {activePolicies} policies will be
+                        endorsed with the new email once confirmed.
                       </p>
                     </div>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  A notification was also sent to {client.email} with a revert link
-                  (valid 7 days).
+                  A notification with a revert link (7 days) was sent to {client.email}.
                 </p>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </section>
 
-        {/* Email update communications preview */}
+        {/* Communications preview */}
         {state === "pending" && (
-          <Card>
-            <CardHeader>
-              <h2 className="text-sm font-semibold text-muted-foreground">
+          <section className="rounded-xl border bg-white">
+            <div className="border-b px-5 py-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Communications sent
-              </h2>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="rounded-lg border p-3 space-y-1">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-[10px]">
-                    To new email
-                  </Badge>
-                </div>
-                <p className="text-sm font-medium">
-                  {copy.emailUpdate.confirmSubject}
-                </p>
+              </span>
+            </div>
+            <div className="p-5 space-y-3">
+              <div className="rounded-lg border bg-obie-surface p-3 space-y-1">
+                <Badge variant="outline" className="text-[10px]">To new email</Badge>
+                <p className="text-sm font-medium">{copy.emailUpdate.confirmSubject}</p>
                 <p className="text-xs text-muted-foreground">
                   {t(copy.emailUpdate.confirmBody, { count: activePolicies })}
                 </p>
               </div>
-              <div className="rounded-lg border p-3 space-y-1">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-[10px]">
-                    To old email
-                  </Badge>
-                </div>
-                <p className="text-sm font-medium">
-                  {copy.emailUpdate.notifySubject}
-                </p>
+              <div className="rounded-lg border bg-obie-surface p-3 space-y-1">
+                <Badge variant="outline" className="text-[10px]">To old email</Badge>
+                <p className="text-sm font-medium">{copy.emailUpdate.notifySubject}</p>
                 <p className="text-xs text-muted-foreground">
-                  {t(copy.emailUpdate.notifyBody, {
-                    newEmail: newEmail || "new@email.com",
-                  })}
+                  {t(copy.emailUpdate.notifyBody, { newEmail: newEmail || "new@email.com" })}
                 </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
         )}
       </div>
     </PrototypeShell>

@@ -11,6 +11,7 @@ import {
   Settings,
   Pencil,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -26,20 +27,26 @@ const screens = [
       {
         href: "/agent/search",
         icon: Search,
-        title: "Client Search & Selection",
-        desc: "Search, select verified/unverified clients, or create new",
+        label: "Client Search",
+        desc: "Find or create clients",
       },
       {
         href: "/agent/review/unverified",
         icon: FileCheck,
-        title: "Review Screen — Unverified",
-        desc: "Email entry, send review link, collision prompt",
+        label: "Review — Unverified",
+        desc: "Email entry + collision",
       },
       {
         href: "/agent/review/verified",
         icon: ShieldCheck,
-        title: "Review Screen — Verified",
-        desc: "Pre-filled email, send for signature only",
+        label: "Review — Verified",
+        desc: "Signature only",
+      },
+      {
+        href: "/agent/profile",
+        icon: Settings,
+        label: "Profile Email Edit",
+        desc: "Endorsement flow",
       },
     ],
   },
@@ -49,13 +56,13 @@ const screens = [
       {
         href: "/client/email",
         icon: Mail,
-        title: "Client Email",
-        desc: "The review link email as it appears in the inbox",
+        label: "Email Preview",
+        desc: "Inbox rendering",
       },
       {
         href: "/client/review",
         icon: MousePointerClick,
-        title: "Client Click-Through",
+        label: "Click-Through",
         desc: "Review → sign → pay → done",
       },
     ],
@@ -66,14 +73,14 @@ const screens = [
       {
         href: "/d2c/start",
         icon: Globe,
-        title: "D2C Entry",
-        desc: "Email upfront, recognized vs new client",
+        label: "D2C Entry",
+        desc: "Email-first start",
       },
       {
         href: "/d2c/checkout",
         icon: Mail,
-        title: "D2C Pre-Checkout",
-        desc: "\"Check your email to complete checkout\"",
+        label: "Pre-Checkout",
+        desc: "Verify before payment",
       },
     ],
   },
@@ -83,25 +90,14 @@ const screens = [
       {
         href: "/halo/clients",
         icon: Users,
-        title: "Halo Clients Tab",
-        desc: "Parent accounts, nested verified clients, unverified section",
+        label: "Halo Clients",
+        desc: "Full identity graph",
       },
-      {
-        href: "/agent/profile",
-        icon: Settings,
-        title: "Client Profile — Email Edit",
-        desc: "Email change flow with endorsement messaging",
-      },
-    ],
-  },
-  {
-    section: "Utilities",
-    items: [
       {
         href: "/copy",
         icon: Pencil,
-        title: "Copy Editor",
-        desc: "Edit all prototype strings in one place",
+        label: "Copy Editor",
+        desc: "All prototype strings",
       },
     ],
   },
@@ -109,42 +105,52 @@ const screens = [
 
 function HomePage() {
   return (
-    <main className="min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl p-6 md:p-12 space-y-10">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Contact Verification Prototype
-          </h1>
-          <p className="mt-1 text-muted-foreground">
-            Clickable mockups for every screen in the verification flow.
-          </p>
-        </div>
-
-        {screens.map((section) => (
-          <div key={section.section} className="space-y-3">
-            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              {section.section}
-            </h2>
-            <div className="grid gap-3">
-              {section.items.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  className="group flex items-start gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent"
-                >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                    <item.icon className="h-4 w-4" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium">{item.title}</p>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+    <div className="min-h-screen bg-obie-surface">
+      {/* Header */}
+      <header className="border-b bg-white">
+        <div className="mx-auto flex max-w-5xl items-center gap-3 px-6 py-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-obie-teal">
+            <span className="text-xs font-bold text-obie-lime">O</span>
           </div>
-        ))}
-      </div>
-    </main>
+          <div>
+            <h1 className="text-base font-semibold tracking-tight">Contact Verification</h1>
+            <p className="text-xs text-muted-foreground">Interactive prototype · All flows</p>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-5xl px-6 py-8">
+        <div className="grid gap-8 md:grid-cols-2">
+          {screens.map((section) => (
+            <div key={section.section} className="space-y-3">
+              <h2 className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                {section.section}
+              </h2>
+              <div className="rounded-xl border bg-white">
+                {section.items.map((item, i) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className={cn(
+                      "group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent",
+                      i > 0 && "border-t"
+                    )}
+                  >
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-obie-surface text-muted-foreground transition-colors group-hover:bg-obie-teal group-hover:text-obie-lime">
+                      <item.icon className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-medium">{item.label}</p>
+                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                    </div>
+                    <span className="text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">→</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
   );
 }

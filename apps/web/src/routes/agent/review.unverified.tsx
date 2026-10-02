@@ -7,8 +7,6 @@ import { PrototypeShell, StatusBadge } from "@/components/prototype-shell";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
   Send,
@@ -20,6 +18,10 @@ import {
   ExternalLink,
   X,
   CheckCircle2,
+  Home,
+  DollarSign,
+  Calendar,
+  Shield,
 } from "lucide-react";
 
 export const Route = createFileRoute("/agent/review/unverified")({
@@ -35,9 +37,9 @@ function ReviewUnverified() {
   const client = unverifiedClients[0]!;
   const collisionClient = verifiedClients[1]!; // Ron Doe
   const clientName = `${client.firstName} ${client.lastName}`;
+  const p = samplePolicy;
 
   function handleSend() {
-    // Simulate collision if the email matches Ron Doe's
     if (email.toLowerCase() === collisionClient.email?.toLowerCase()) {
       setState("collision");
     } else {
@@ -48,28 +50,29 @@ function ReviewUnverified() {
   return (
     <PrototypeShell
       title={copy.review.pageTitle}
-      subtitle="Unverified client — email entry required before bind"
+      subtitle="Unverified client — try ron.doe@email.com for collision"
       perspective="agent"
     >
-      <div className="space-y-6">
-        {/* Policyholder card */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-muted-foreground">
+      <div className="grid gap-6 lg:grid-cols-5">
+        {/* Left column: policyholder + email */}
+        <div className="lg:col-span-3 space-y-6">
+          {/* Policyholder */}
+          <section className="rounded-xl border bg-white">
+            <div className="flex items-center justify-between border-b px-5 py-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 {copy.review.policyholderLabel}
-              </h2>
+              </span>
               <StatusBadge status={state === "verified" ? "verified" : "unverified"} />
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+
+            <div className="p-5 space-y-5">
+              {/* Client info */}
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-obie-surface text-muted-foreground">
                   <User className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-base font-semibold">{clientName}</p>
+                  <p className="font-semibold">{clientName}</p>
                   {client.phone && (
                     <p className="text-xs text-muted-foreground">{client.phone}</p>
                   )}
@@ -78,11 +81,13 @@ function ReviewUnverified() {
 
               <Separator />
 
-              {/* Email entry / sent state */}
+              {/* Email field states */}
               {state === "empty" && (
                 <div className="space-y-3">
-                  <div className="space-y-2">
-                    <Label htmlFor="clientEmail">{copy.review.emailLabel}</Label>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="clientEmail" className="text-xs font-medium">
+                      {copy.review.emailLabel}
+                    </Label>
                     <Input
                       id="clientEmail"
                       type="email"
@@ -97,23 +102,24 @@ function ReviewUnverified() {
                   <Button
                     onClick={handleSend}
                     disabled={!email || !email.includes("@")}
+                    size="sm"
                     className="gap-2"
                   >
-                    <Send className="h-4 w-4" />
+                    <Send className="h-3.5 w-3.5" />
                     {copy.review.sendButton}
                   </Button>
                 </div>
               )}
 
-              {/* Collision prompt */}
+              {/* Collision */}
               {state === "collision" && (
-                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
+                <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
                   <div className="flex items-start gap-3">
-                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600 dark:text-amber-400" />
-                    <div className="space-y-3">
-                      <p className="text-sm font-medium text-amber-900 dark:text-amber-100">
+                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
+                    <div className="space-y-3 flex-1">
+                      <p className="text-sm font-medium text-amber-900">
                         {t(copy.review.collisionTitle, {
-                          email: email,
+                          email,
                           name: `${collisionClient.firstName} ${collisionClient.lastName}`,
                         })}
                       </p>
@@ -121,10 +127,10 @@ function ReviewUnverified() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="justify-start gap-2"
+                          className="justify-start gap-2 bg-white"
                           onClick={() => setState("verified")}
                         >
-                          <CheckCircle2 className="h-4 w-4" />
+                          <CheckCircle2 className="h-3.5 w-3.5" />
                           {t(copy.review.collisionUseExisting, {
                             name: `${collisionClient.firstName} ${collisionClient.lastName}`,
                           })}
@@ -132,16 +138,13 @@ function ReviewUnverified() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="justify-start gap-2"
-                          onClick={() => {
-                            setEmail("");
-                            setState("empty");
-                          }}
+                          className="justify-start gap-2 bg-white"
+                          onClick={() => { setEmail(""); setState("empty"); }}
                         >
-                          <PencilLine className="h-4 w-4" />
+                          <PencilLine className="h-3.5 w-3.5" />
                           {copy.review.collisionDifferent}
                         </Button>
-                        <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
+                        <button className="flex items-center gap-1.5 text-xs text-obie-link hover:underline mt-1">
                           <ExternalLink className="h-3 w-3" />
                           {t(copy.review.collisionViewProfile, {
                             name: `${collisionClient.firstName} ${collisionClient.lastName}`,
@@ -150,11 +153,8 @@ function ReviewUnverified() {
                       </div>
                     </div>
                     <button
-                      onClick={() => {
-                        setEmail("");
-                        setState("empty");
-                      }}
-                      className="ml-auto text-amber-600 hover:text-amber-900 dark:text-amber-400"
+                      onClick={() => { setEmail(""); setState("empty"); }}
+                      className="text-amber-500 hover:text-amber-800"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -162,108 +162,109 @@ function ReviewUnverified() {
                 </div>
               )}
 
-              {/* Sent state */}
+              {/* Sent */}
               {state === "sent" && (
                 <div className="space-y-3">
-                  <div className="rounded-lg border bg-muted/50 p-4">
-                    <div className="flex items-center gap-2">
-                      <Send className="h-4 w-4 text-muted-foreground" />
-                      <p className="text-sm">
-                        {t(copy.review.sentConfirmation, { email })}
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2 rounded-lg border bg-obie-surface px-4 py-3">
+                    <Send className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-sm">{t(copy.review.sentConfirmation, { email })}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex items-center gap-2">
                     <Button variant="outline" size="sm" className="gap-1.5">
                       <RotateCw className="h-3 w-3" />
                       {copy.review.resendButton}
                     </Button>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="sm"
-                      className="gap-1.5"
-                      onClick={() => {
-                        setEmail("");
-                        setState("empty");
-                      }}
+                      className="gap-1.5 text-muted-foreground"
+                      onClick={() => { setEmail(""); setState("empty"); }}
                     >
                       <PencilLine className="h-3 w-3" />
                       {copy.review.changeEmailButton}
                     </Button>
-                    {/* Demo: simulate verification */}
                     <Button
                       variant="ghost"
                       size="sm"
                       className="ml-auto text-xs text-emerald-600"
                       onClick={() => setState("verified")}
                     >
-                      [Demo: simulate verify]
+                      [Simulate verify]
                     </Button>
                   </div>
                 </div>
               )}
 
-              {/* Verified state */}
+              {/* Verified */}
               {state === "verified" && (
-                <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-800 dark:bg-emerald-950">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">
-                      {email || collisionClient.email}
-                    </p>
-                  </div>
+                <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  <p className="text-sm font-medium text-emerald-800">
+                    {email || collisionClient.email}
+                  </p>
                 </div>
               )}
             </div>
-          </CardContent>
-        </Card>
+          </section>
 
-        {/* Coverage summary */}
-        <Card>
-          <CardHeader>
-            <h2 className="text-sm font-semibold text-muted-foreground">
-              {copy.review.coverageTitle}
-            </h2>
-          </CardHeader>
-          <CardContent>
-            <dl className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <dt className="text-muted-foreground">{copy.review.propertyLabel}</dt>
-                <dd className="font-medium">{samplePolicy.address}</dd>
+          {/* Prepayment CTA */}
+          {state === "sent" && (
+            <section className="rounded-xl border bg-white p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium">Prepay on behalf of your client</p>
+                  <p className="text-xs text-muted-foreground">
+                    Optional — client won't see a payment step if you pay now.
+                  </p>
+                </div>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <CreditCard className="h-3.5 w-3.5" />
+                  {copy.review.continueToPayment}
+                </Button>
               </div>
-              <div>
-                <dt className="text-muted-foreground">{copy.review.premiumLabel}</dt>
-                <dd className="font-medium">${samplePolicy.premium.toLocaleString()}/yr</dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">{copy.review.coverageLabel}</dt>
-                <dd className="font-medium">
-                  ${samplePolicy.dwellingCoverage.toLocaleString()}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">{copy.review.deductibleLabel}</dt>
-                <dd className="font-medium">
-                  ${samplePolicy.deductible.toLocaleString()}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-muted-foreground">{copy.review.effectiveLabel}</dt>
-                <dd className="font-medium">{samplePolicy.effectiveDate}</dd>
-              </div>
-            </dl>
-          </CardContent>
-        </Card>
+            </section>
+          )}
+        </div>
 
-        {/* Prepayment CTA */}
-        {state === "sent" && (
-          <div className="flex justify-end">
-            <Button variant="outline" className="gap-2">
-              <CreditCard className="h-4 w-4" />
-              {copy.review.continueToPayment}
-            </Button>
-          </div>
-        )}
+        {/* Right column: coverage summary */}
+        <div className="lg:col-span-2">
+          <section className="rounded-xl border bg-white">
+            <div className="border-b px-5 py-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {copy.review.coverageTitle}
+              </span>
+            </div>
+            <div className="p-5 space-y-4">
+              <div className="flex items-start gap-3">
+                <Home className="mt-0.5 h-4 w-4 text-muted-foreground" />
+                <div>
+                  <p className="text-xs text-muted-foreground">{copy.review.propertyLabel}</p>
+                  <p className="text-sm font-medium">{p.address}</p>
+                </div>
+              </div>
+              <Separator />
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{copy.review.coverageLabel}</span>
+                  <span className="font-medium">${p.dwellingCoverage.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{copy.review.deductibleLabel}</span>
+                  <span className="font-medium">${p.deductible.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">{copy.review.effectiveLabel}</span>
+                  <span className="font-medium">{p.effectiveDate}</span>
+                </div>
+              </div>
+              <Separator />
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">{copy.review.premiumLabel}</span>
+                <span className="text-lg font-semibold">${p.premium.toLocaleString()}<span className="text-sm font-normal text-muted-foreground">/yr</span></span>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </PrototypeShell>
   );

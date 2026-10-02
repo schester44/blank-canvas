@@ -7,16 +7,9 @@ import { PrototypeShell } from "@/components/prototype-shell";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import {
-  CheckCircle2,
-  Shield,
-  FileText,
-  CreditCard,
-  PartyPopper,
-  Lock,
-} from "lucide-react";
+import { CheckCircle2, FileText, CreditCard, Lock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/client/review")({
   component: ClientReview,
@@ -32,146 +25,131 @@ function ClientReview() {
   const p = samplePolicy;
   const clientEmail = "john.smith@email.com";
 
+  const steps: { key: Step; label: string }[] = [
+    { key: "review", label: "Review" },
+    { key: "sign", label: "Sign" },
+    { key: "pay", label: "Pay" },
+    { key: "done", label: "Done" },
+  ];
+  const stepIndex = steps.findIndex((s) => s.key === step);
+
   return (
     <PrototypeShell
       title={copy.clientReview.pageTitle}
-      subtitle="The client's experience after clicking the magic link"
+      subtitle="Client's experience after clicking the magic link"
       perspective="client"
+      maxWidth="xl"
     >
-      <div className="mx-auto max-w-lg space-y-6">
-        {/* Signed in strip */}
-        <div className="flex items-center gap-2 rounded-lg bg-muted/50 px-4 py-2 text-xs text-muted-foreground">
+      <div className="space-y-6">
+        {/* Signed-in strip */}
+        <div className="flex items-center gap-2 rounded-lg bg-obie-teal px-4 py-2 text-xs text-obie-lime">
           <Lock className="h-3 w-3" />
           {t(copy.clientReview.signedInAs, { email: clientEmail })}
         </div>
 
-        {/* Steps indicator */}
-        <div className="flex items-center gap-2 text-xs">
-          {(["review", "sign", "pay", "done"] as Step[]).map((s, i) => {
-            const labels = ["Review", "Sign", "Pay", "Done"];
-            const isActive = s === step;
-            const isPast =
-              ["review", "sign", "pay", "done"].indexOf(s) <
-              ["review", "sign", "pay", "done"].indexOf(step);
+        {/* Step indicator */}
+        <div className="flex items-center justify-center gap-1">
+          {steps.map((s, i) => {
+            const isPast = i < stepIndex;
+            const isActive = i === stepIndex;
             return (
-              <div key={s} className="flex items-center gap-2">
+              <div key={s.key} className="flex items-center gap-1">
                 {i > 0 && (
-                  <div
-                    className={`h-px w-6 ${isPast ? "bg-emerald-500" : "bg-border"}`}
-                  />
+                  <div className={cn("h-px w-8", isPast ? "bg-emerald-500" : "bg-border")} />
                 )}
                 <div
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium ${
-                    isPast
-                      ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
-                      : isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
-                  }`}
+                  className={cn(
+                    "flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium",
+                    isPast && "bg-emerald-100 text-emerald-700",
+                    isActive && "bg-obie-teal text-obie-lime",
+                    !isPast && !isActive && "bg-muted text-muted-foreground"
+                  )}
                 >
                   {isPast ? <CheckCircle2 className="h-3.5 w-3.5" /> : i + 1}
                 </div>
-                <span
-                  className={
-                    isActive ? "font-medium text-foreground" : "text-muted-foreground"
-                  }
-                >
-                  {labels[i]}
+                <span className={cn("text-xs", isActive ? "font-medium" : "text-muted-foreground")}>
+                  {s.label}
                 </span>
               </div>
             );
           })}
         </div>
 
-        {/* Step: Review */}
+        {/* Review step */}
         {step === "review" && (
-          <>
+          <div className="space-y-4">
             {/* Agency header */}
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
+            <div className="flex items-center gap-3 rounded-xl bg-obie-teal px-5 py-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-obie-lime/20 text-obie-lime text-sm font-bold">
                 O
               </div>
               <div>
-                <p className="text-sm font-semibold">{p.agency}</p>
-                <p className="text-xs text-muted-foreground">Your agent: {p.agent}</p>
+                <p className="text-sm font-semibold text-white">{p.agency}</p>
+                <p className="text-xs text-obie-lime/70">Your agent: {p.agent}</p>
               </div>
             </div>
 
-            <Card>
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-muted-foreground" />
-                  <h2 className="text-sm font-semibold">Policy details</h2>
+            <section className="rounded-xl border bg-white">
+              <div className="border-b px-5 py-3">
+                <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  Policy details
+                </span>
+              </div>
+              <div className="p-5 space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Property</span>
+                  <span className="text-right font-medium">{p.address}</span>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <dl className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Property</dt>
-                    <dd className="text-right font-medium">{p.address}</dd>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Dwelling coverage</dt>
-                    <dd className="font-medium">
-                      ${p.dwellingCoverage.toLocaleString()}
-                    </dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Deductible</dt>
-                    <dd className="font-medium">${p.deductible.toLocaleString()}</dd>
-                  </div>
-                  <Separator />
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Annual premium</dt>
-                    <dd className="text-base font-semibold">
-                      ${p.premium.toLocaleString()}/yr
-                    </dd>
-                  </div>
-                  <div className="flex justify-between">
-                    <dt className="text-muted-foreground">Effective</dt>
-                    <dd className="font-medium">{p.effectiveDate}</dd>
-                  </div>
-                </dl>
-              </CardContent>
-            </Card>
+                <Separator />
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Dwelling coverage</span>
+                  <span className="font-medium">${p.dwellingCoverage.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Deductible</span>
+                  <span className="font-medium">${p.deductible.toLocaleString()}</span>
+                </div>
+                <Separator />
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Annual premium</span>
+                  <span className="text-lg font-semibold">${p.premium.toLocaleString()}/yr</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Effective</span>
+                  <span className="font-medium">{p.effectiveDate}</span>
+                </div>
+              </div>
+            </section>
 
-            {/* Documents */}
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <FileText className="h-4 w-4 text-muted-foreground" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">Policy documents</p>
-                    <p className="text-xs text-muted-foreground">
-                      Declaration page, full policy
-                    </p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    View
-                  </Button>
+            <section className="rounded-xl border bg-white p-4">
+              <div className="flex items-center gap-3">
+                <FileText className="h-4 w-4 text-muted-foreground" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Policy documents</p>
+                  <p className="text-xs text-muted-foreground">Declaration page, full policy</p>
                 </div>
-              </CardContent>
-            </Card>
+                <Button variant="outline" size="sm">View</Button>
+              </div>
+            </section>
 
             <Button className="w-full" size="lg" onClick={() => setStep("sign")}>
               Continue to sign
             </Button>
-          </>
+          </div>
         )}
 
-        {/* Step: Sign */}
+        {/* Sign step */}
         {step === "sign" && (
-          <Card>
-            <CardHeader>
-              <h2 className="text-base font-semibold">{copy.clientReview.signTitle}</h2>
-              <p className="text-sm text-muted-foreground">
-                {copy.clientReview.signHelper}
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="signature">Signature</Label>
+          <section className="rounded-xl border bg-white">
+            <div className="border-b px-5 py-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {copy.clientReview.signTitle}
+              </span>
+            </div>
+            <div className="p-5 space-y-4">
+              <p className="text-sm text-muted-foreground">{copy.clientReview.signHelper}</p>
+              <div className="space-y-1.5">
+                <Label htmlFor="signature" className="text-xs font-medium">Signature</Label>
                 <Input
                   id="signature"
                   placeholder={copy.clientReview.signPlaceholder}
@@ -191,61 +169,57 @@ function ClientReview() {
               >
                 {copy.clientReview.signButton}
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
         )}
 
-        {/* Step: Pay */}
+        {/* Pay step */}
         {step === "pay" && (
-          <Card>
-            <CardHeader>
-              <h2 className="text-base font-semibold">{copy.clientReview.payTitle}</h2>
-              <p className="text-sm text-muted-foreground">
-                {copy.clientReview.payHelper}
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Card number</Label>
+          <section className="rounded-xl border bg-white">
+            <div className="border-b px-5 py-3">
+              <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {copy.clientReview.payTitle}
+              </span>
+            </div>
+            <div className="p-5 space-y-4">
+              <p className="text-sm text-muted-foreground">{copy.clientReview.payHelper}</p>
+              <div className="space-y-1.5">
+                <Label className="text-xs font-medium">Card number</Label>
                 <Input placeholder="4242 4242 4242 4242" />
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Expiry</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">Expiry</Label>
                   <Input placeholder="MM/YY" />
                 </div>
-                <div className="space-y-2">
-                  <Label>CVC</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs font-medium">CVC</Label>
                   <Input placeholder="123" />
                 </div>
               </div>
               <Button className="w-full gap-2" size="lg" onClick={() => setStep("done")}>
                 <CreditCard className="h-4 w-4" />
-                {t(copy.clientReview.payButton, {
-                  amount: `$${p.premium.toLocaleString()}`,
-                })}
+                {t(copy.clientReview.payButton, { amount: `$${p.premium.toLocaleString()}` })}
               </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </section>
         )}
 
-        {/* Step: Done */}
+        {/* Done step */}
         {step === "done" && (
-          <div className="text-center space-y-6 py-8">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900">
-              <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+          <div className="text-center space-y-6 py-12">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+              <CheckCircle2 className="h-8 w-8 text-emerald-600" />
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-bold">{copy.clientReview.doneTitle}</h2>
               <p className="text-muted-foreground">{copy.clientReview.doneSubtitle}</p>
             </div>
-            <div className="rounded-lg border bg-muted/30 p-4 text-sm">
+            <div className="mx-auto max-w-xs rounded-lg border bg-white p-4 text-sm font-medium">
               {t(copy.clientReview.donePolicyNumber, { number: p.policyNumber! })}
             </div>
             <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                {copy.clientReview.donePortalPrompt}
-              </p>
+              <p className="text-sm text-muted-foreground">{copy.clientReview.donePortalPrompt}</p>
               <Button variant="outline">{copy.clientReview.donePortalLink}</Button>
             </div>
           </div>
