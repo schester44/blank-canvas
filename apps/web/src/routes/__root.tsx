@@ -8,7 +8,7 @@ import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { title } from "@/lib/meta";
 import { getThemeServerFn } from "@/lib/theme";
-import appCss from "../styles.css?url";
+import "../styles.css";
 
 export const Route = createRootRoute({
   beforeLoad: async () => {
@@ -26,7 +26,6 @@ export const Route = createRootRoute({
       },
       { title: title() },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
   }),
 });
 
